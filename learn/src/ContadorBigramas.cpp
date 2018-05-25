@@ -119,6 +119,7 @@ ContadorBigramas::getBigramasActivos() const{
 }
 
 ContadorBigramas::addBigrama(const char cadena[], int frecuencia){
+    // CREO QUE ESTA BIEN , PERO HAY QUE REVISARLO
     
     bool ok = false;
     //Variables para guardar las posiciones de la cadena en la matriz
@@ -172,6 +173,8 @@ ContadorBigramas::operator =(const ContadorBigramas& orig){
 }
 
 ContadorBigramas::operator +=(const ContadorBigramas& rhs){
+    
+    // NO SE PUEDE USAR UN += EN EL OPERADOR.
 
     for (int i = 0 ; i < _caracteresValidos.length() ; i++){
     
@@ -186,7 +189,9 @@ ContadorBigramas::operator +=(const ContadorBigramas& rhs){
         }
     
     }
+    // HAY QUE DEVOLVER ALGO Y NO SE SI ESTO ESTA BIEN
 
+    return this->_bigramas;
 
 }
 
