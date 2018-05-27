@@ -11,12 +11,7 @@
 #include <fstream>
 
 //Echale un ojo a todas las funciones del archivo, pero concretamente a:
-//addBigrama();
-//operador +=();
-//calcularFrecuenciasBigramas()
-//toIdioma();
-//y mas concretamente a fromIdioma(), que ha salido cortisismo y me he rallao.
-//Borra los comentarios explicando las funciones cuando los leas.
+//addBigrama() , ToIdioma() , FromIdioma () , CalculaFrecuenciaBigrama()
 
 using namespace std;
 
@@ -174,15 +169,14 @@ ContadorBigramas::operator =(const ContadorBigramas& orig){
 
 ContadorBigramas::operator +=(const ContadorBigramas& rhs){
     
-    // NO SE PUEDE USAR UN += EN EL OPERADOR.
-
+    
     for (int i = 0 ; i < _caracteresValidos.length() ; i++){
     
         for (int j = 0 ; j < _caracteresValidos.length() ; j++){
         
             if (rhs._bigramas[i][j] > 0){
             
-                _bigramas[i][i] += rhs._bigramas[i][j];
+                _bigramas[i][j] = _bigramas[i][j] + rhs._bigramas[i][j];
             
             }
         
@@ -191,7 +185,7 @@ ContadorBigramas::operator +=(const ContadorBigramas& rhs){
     }
     // HAY QUE DEVOLVER ALGO Y NO SE SI ESTO ESTA BIEN
 
-    return this->_bigramas;
+    return this;
 
 }
 
@@ -244,6 +238,7 @@ ContadorBigramas::toIdioma() const{
     char cadena[2];
     Bigrama bigrama;
     
+    /*
     for (int i = 0 ; i < _caracteresValidos.length() ; i++){
     
         for (int j = 0 ; j < _caracteresValidos.length() ; j++){
@@ -257,6 +252,9 @@ ContadorBigramas::toIdioma() const{
         }
     
     }
+    */
+    
+    numeroBigramas = getBigramasActivos();
     
     Idioma objIdioma(numeroBigramas);//Creo objeto idioma con numeroBigramas.
     

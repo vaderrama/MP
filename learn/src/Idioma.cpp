@@ -29,7 +29,7 @@ Idioma::liberarMemoria(){
 
 Idioma::copiar(const Idioma& otro){
 
-
+// FALTA 
 
 }
 

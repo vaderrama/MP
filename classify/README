@@ -1,0 +1,28 @@
+Reglas a añadir al Makefile de Netbeans.
+
+Dónde: Después de:
+
+.help-post: .help-impl
+# Add your post 'help' code here...
+
+
+Reglas a añadir: Tenéis que cambiar [NOMBRE_EJECUTABLE] por el nombre de vuestro ejecutable
+
+doxy:
+	doxygen doc/classify.doxy
+	firefox doc/html/index.html
+	
+zip: clobber
+	rm -rf zip/*
+	rm -rf dist/*
+	rm -rf doc/html doc/latex
+	zip -r zip/practica6_classify.zip * -x nbproject/private/*
+
+
+testc:
+	@echo "Testc: Clasifica resultado español"
+	dist/Debug/GNU-Linux/[NOMBRE_EJECUTABLE] data/bailen.txt  data/english.bgr data/spanish.bgr
+
+testcv:
+	@echo "Testcv: [VALGRIND] Clasifica resultado español"
+	valgrind --leak-check=full dist/Debug/GNU-Linux/[NOMBRE_EJECUTABLE] data/bailen.txt  data/english.bgr data/spanish.bgr
