@@ -29,7 +29,15 @@ Idioma::liberarMemoria(){
 
 Idioma::copiar(const Idioma& otro){
 
-// FALTA 
+    liberarMemoria();
+    _nBigramas = otro._nBigramas;
+    reservarMemoria(otro._nBigramas);
+    
+    for (int i = 0 ; i < _nBigramas ; i++){
+    
+        _conjunto[i] = otro._conjunto[i];
+    
+    }
 
 }
 
@@ -132,7 +140,21 @@ Idioma::distancia(const Idioma& otro) const{
 
 Idioma::ordenar(){
 
-    // ALVARO TIENE QUE COGER EL ORDENAR DEL OTRO PROYECTO
+    for (int i = 0 ; i < _nBigramas ; i++) {
+        
+        int max = i;
+        
+        for (int j = i+1 ; j < _nBigramas ; j++)
+            
+            if (_conjunto[j].getFrecuencia() > _conjunto[max].getFrecuencia())
+                max = j;
+        
+        if (max != i) {
+            Bigrama aux = _conjunto[max];
+            _conjunto[max] = _conjunto[i];
+            _conjunto[i] = aux;
+        }
+    }
 
 }
 
@@ -214,11 +236,11 @@ friend std::ostream& operator<<(std::ostream& os , const Idioma& i){
 }
     
 
-}
 
-friend std::istream& operator>>(std::istream& os , Idioma& i){
+
+friend std::istream& operator>>(std::istream& is , Idioma& i){
     
-    string idio;
+    std::string idio;
     int nbigr;
     Bigrama* conj;
     
