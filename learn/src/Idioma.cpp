@@ -110,6 +110,8 @@ Idioma::getPosicion(int p) const{
 Idioma::setPosicion(int p, const Bigrama& bg){
 
     _conjunto[p] = bg;
+    nbigr++;
+    
 
 }
 
@@ -132,10 +134,25 @@ Idioma::findBigrama(const std::string& bg) const{
 }
 
 Idioma::distancia(const Idioma& otro) const{
-
-    // NO ENTIENDO QUE POLLAS HAY QUE HACER AQUI
+    bool esta = false;
+    int suma = 0;
+    double total = 0;
     
-
+    for (int i = 0; i<this->_nBigramas && !esta; i++) {
+        
+        for (int j = 0; j<otro._nBigramas && !esta; j++) {
+            
+            if (this->_conjunto[i].getBigrama() == otro._conjunto[j].getBigrama() ) {
+                encontrado = true;
+                suma += abs(i-j);
+            }
+        }
+    }
+    
+    total = suma / (otro.getSize())*(otro.getSize());
+    
+    return total;
+    
 }
 
 Idioma::ordenar(){
@@ -169,13 +186,11 @@ Idioma::salvarAFichero(const char* fichero) const{
     
         f << _idioma << endl;
         f << _nBigramas << endl;
-        /*
+        
         for (int i = 0; i<_nBigramas; i++) {
             f<<_conjunto[i];
             
         }
-         */
-        f << _conjunto << endl;
         ok = true;
         f.close();
     
@@ -288,11 +303,12 @@ std::istream& operator>>(std::istream& is , Idioma& i){
     
     is >> idio;
     is >> nbigr;
-    is >> conj;
     
-    
+    for (int i = 0 ; i<nbigr; i++) {
+        is >> conj;
+    }
+
     i.setIdioma(idio);
-    // setNBigramas ??
     i.setPosicion(nbigr,conj);
     
 
