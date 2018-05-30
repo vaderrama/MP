@@ -13,6 +13,7 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <fstream>
 #include "ContadorBigramas.h"
 #include "Idioma.h"
 #include "Bigrama.h"
@@ -36,7 +37,7 @@ int main(int argc, char** argv) {
     
     }
     
-    if (argc == 3){ //Argumentos mínimos necesarios.
+    if (argc == 3){
     
         if (argv[1] == "-c"){ //Crear un nuevo archivo de salida.
         
@@ -46,16 +47,19 @@ int main(int argc, char** argv) {
             
             idioma.ordenar();
             
-            idioma.salvarAFichero(out); //No se crear el fichero salida.
+            idioma.salvarAFichero(out);
         
         }else if (argv[1] == "-a"){ //Añadir a un archivo existente.
-        
+            
+            //No entiendo muy bien como añadir los bigramas
+            //ni como se le pasa el archivo.
+            
             contador.calcularFrecuenciasBigramas(argv[2]);
             
             idioma = contador.toIdioma();
             
             idioma.ordenar();
-            
+            // fichero salida -f 
             idioma.salvarAFichero(out);
         
         }else{ //Entrada no válida.
@@ -65,13 +69,325 @@ int main(int argc, char** argv) {
         
         }
         
-        if (argc == 4){ //Como comprobar si es el parametro -l , -f u otro archivo.
+    }//Fin 3 argc
         
+    if (argc == 4){ //Hay dos ficheros, sino sería "argc = 5" minimo.
+        
+        if (argv[1] == "-c"){
+                
+            contador.calcularFrecuenciasBigramas(argv[2]);
             
+            contador.calcularFrecuenciasBigramas(argv[3]);
+            
+            idioma = contador.toIdioma();
+            
+            idioma.ordenar();
+            
+            idioma.salvarAFichero(out);
+                
+                
+        }else if (argv[1] == "-a"){
+                
+            contador.calcularFrecuenciasBigramas(argv[2]);
+            
+            contador.calcularFrecuenciasBigramas(argv[3]);
+            
+            idioma = contador.toIdioma();
+            
+            idioma.ordenar();
+            
+            idioma.salvarAFichero(out);
+                
+                
+        }else{
+             
+            cerr << "No se ha proporcionado un primer parametro valido (-c|-a)." << endl;
+            return 1;  
+        
+        }
+    
+    }//Fin 4 argc
+    
+    if (argc == 5){
+    
+        if (argv[1] == "-c"){
+            
+            contador.calcularFrecuenciasBigramas(argv[4]);
+            
+            idioma = contador.toIdioma();
+            
+            idioma.ordenar();
+            
+            if (argc[2] == "-l"){
+            
+                idioma.setIdioma(argv[3]);
+                
+                idioma.salvarAFichero(out);
+            
+            }
+            
+            if (argv[2] == "-f"){
+            
+                idioma.salvarAFichero(argv[3]);
+            
+            }
+            
+        }else if (argv[1] == "-a"){
+            
+            contador.calcularFrecuenciasBigramas(argv[4]);
+            
+            idioma = contador.toIdioma();
+            
+            idioma.ordenar();
+            
+            if (argc[2] == "-l"){
+            
+                idioma.setIdioma(argv[3]);
+                
+                idioma.salvarAFichero(out);
+            
+            }
+            
+            if (argv[2] == "-f"){
+            
+                idioma.salvarAFichero(argv[3]);
+            
+            }
+            
+        }else{
+             
+            cerr << "No se ha proporcionado un primer parametro valido (-c|-a)." << endl;
+            return 1;  
+        
+        }
+    
+    }//Fin 5 argc
+    
+    if (argc == 6){ //Hay dos ficheros, sino sería "argc = 7" minimo.
+    
+        if (argv[1] == "-c"){
+            
+            contador.calcularFrecuenciasBigramas(argv[4]);
+            
+            contador.calcularFrecuenciasBigramas(argv[5]);
+            
+            idioma = contador.toIdioma();
+            
+            idioma.ordenar();
+            
+            if (argc[2] == "-l"){
+            
+                idioma.setIdioma(argv[3]);
+                
+                idioma.salvarAFichero(out);
+            
+            }
+            
+            if (argv[2] == "-f"){
+            
+                idioma.salvarAFichero(argv[3]);
+            
+            }
+            
+        }else if (argv[1] == "-a"){
+            
+            contador.calcularFrecuenciasBigramas(argv[4]);
+            
+            contador.calcularFrecuenciasBigramas(argv[5]);
+            
+            idioma = contador.toIdioma();
+            
+            idioma.ordenar();
+            
+            if (argc[2] == "-l"){
+            
+                idioma.setIdioma(argv[3]);
+                
+                idioma.salvarAFichero(out);
+            
+            }
+            
+            if (argv[2] == "-f"){
+            
+                idioma.salvarAFichero(argv[3]);
+            
+            }
+            
+        }else{
+             
+            cerr << "No se ha proporcionado un primer parametro valido (-c|-a)." << endl;
+            return 1;  
+        
+        }
+    
+    }//Fin 6 argc
+    
+    if (argc == 7){
+    
+        if (argv[1] == "-c"){
+            
+            contador.calcularFrecuenciasBigramas(argv[6]);
+            
+            idioma = contador.toIdioma();
+            
+            idioma.ordenar();
+            
+            if (argc[2] == "-l"){
+            
+                idioma.setIdioma(argv[3]);
+            
+            }
+            
+            if (argv[4] == "-f"){
+            
+                idioma.salvarAFichero(argv[5]);
+            
+            }
+            
+        }else if (argv[1] == "-a"){
+            
+            contador.calcularFrecuenciasBigramas(argv[6]);
+            
+            idioma = contador.toIdioma();
+            
+            idioma.ordenar();
+            
+            if (argc[2] == "-l"){
+            
+                idioma.setIdioma(argv[3]);
+            
+            }
+            
+            if (argv[4] == "-f"){
+            
+                idioma.salvarAFichero(argv[5]);
+            
+            }
+            
+        }else{
+             
+            cerr << "No se ha proporcionado un primer parametro valido (-c|-a)." << endl;
+            return 1;  
+        
+        }
+    
+    }//Fin 7 argc
+    
+    if (argc == 8){
+    
+        if (argv[1] == "-c"){
+            
+            contador.calcularFrecuenciasBigramas(argv[6]);
+            
+            contador.calcularFrecuenciasBigramas(argv[7]);
+            
+            idioma = contador.toIdioma();
+            
+            idioma.ordenar();
+            
+            if (argc[2] == "-l"){
+            
+                idioma.setIdioma(argv[3]);
+            
+            }
+            
+            if (argv[4] == "-f"){
+            
+                idioma.salvarAFichero(argv[5]);
+            
+            }
+            
+        }else if (argv[1] == "-a"){
+            
+            contador.calcularFrecuenciasBigramas(argv[6]);
+            
+            contador.calcularFrecuenciasBigramas(argv[7]);
+            
+            idioma = contador.toIdioma();
+            
+            idioma.ordenar();
+            
+            if (argc[2] == "-l"){
+            
+                idioma.setIdioma(argv[3]);
+            
+            }
+            
+            if (argv[4] == "-f"){
+            
+                idioma.salvarAFichero(argv[5]);
+            
+            }
+            
+        }else{
+             
+            cerr << "No se ha proporcionado un primer parametro valido (-c|-a)." << endl;
+            return 1;  
+        
+        }
+    
+    }//Fin 8 argc
+    
+    if (argc == 9){
+    
+        if (argv[1] == "-c"){
+            
+            contador.calcularFrecuenciasBigramas(argv[6]);
+            
+            contador.calcularFrecuenciasBigramas(argv[7]);
+            
+            contador.calcularFrecuenciasBigramas(argv[8]);
+            
+            idioma = contador.toIdioma();
+            
+            idioma.ordenar();
+            
+            if (argc[2] == "-l"){
+            
+                idioma.setIdioma(argv[3]);
+            
+            }
+            
+            if (argv[4] == "-f"){
+            
+                idioma.salvarAFichero(argv[5]);
+            
+            }
+            
+        }else if (argv[1] == "-a"){
+            
+            contador.calcularFrecuenciasBigramas(argv[6]);
+            
+            contador.calcularFrecuenciasBigramas(argv[7]);
+            
+            contador.calcularFrecuenciasBigramas(argv[8]);
+            
+            idioma = contador.toIdioma();
+            
+            idioma.ordenar();
+            
+            if (argc[2] == "-l"){
+            
+                idioma.setIdioma(argv[3]);
+            
+            }
+            
+            if (argv[4] == "-f"){
+            
+                idioma.salvarAFichero(argv[5]);
+            
+            }
+            
+        }else{
+             
+            cerr << "No se ha proporcionado un primer parametro valido (-c|-a)." << endl;
+            return 1;  
         
         }
     
     }
+    
     return 0;
-}
+    
+}//FIN DEL MAIN
 
