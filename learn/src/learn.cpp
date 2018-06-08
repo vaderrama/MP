@@ -14,21 +14,19 @@
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
+#include <cstring>
 #include "ContadorBigramas.h"
 #include "Idioma.h"
 #include "Bigrama.h"
 
 using namespace std;
 
-/*
- * 
- */
+
 int main(int argc, char** argv) {
 
     string valid="abcdefghijklmnopqrstuvwxyz\xE0\xE1\xE2\xE3\xE4\xE5\xE6\xE7\xE8\xE9\xEA\xEB\xEC\xED\xEE\xEF\xF0\xF1\xF2\xF3\xF4\xF5\xF6\xF8\xF9\xFA\xFB\xFC\xFD\xFE\xFF"; 
-    ContadorBigramas contador = new ContadorBigramas(valid);
+    ContadorBigramas contador =  ContadorBigramas(valid);
     Idioma idioma;
-    char* out;
     
     if (argc < 3){//No hay suficientes parámetros
     
@@ -46,21 +44,18 @@ int main(int argc, char** argv) {
             idioma = contador.toIdioma();
             
             idioma.ordenar();
+              
+            idioma.salvarAFichero("out.bgr" );
             
-            idioma.salvarAFichero(out);
-        
         }else if (argv[1] == "-a"){ //Añadir a un archivo existente.
-            
-            //No entiendo muy bien como añadir los bigramas
-            //ni como se le pasa el archivo.
             
             contador.calcularFrecuenciasBigramas(argv[2]);
             
             idioma = contador.toIdioma();
             
             idioma.ordenar();
-            // fichero salida -f 
-            idioma.salvarAFichero(out);
+
+            idioma.salvarAFichero("out.bgr" );
         
         }else{ //Entrada no válida.
         
@@ -83,7 +78,7 @@ int main(int argc, char** argv) {
             
             idioma.ordenar();
             
-            idioma.salvarAFichero(out);
+            idioma.salvarAFichero("out.bgr" );
                 
                 
         }else if (argv[1] == "-a"){
@@ -96,7 +91,7 @@ int main(int argc, char** argv) {
             
             idioma.ordenar();
             
-            idioma.salvarAFichero(out);
+            idioma.salvarAFichero("out.bgr" );
                 
                 
         }else{
@@ -118,11 +113,11 @@ int main(int argc, char** argv) {
             
             idioma.ordenar();
             
-            if (argc[2] == "-l"){
+            if (argv[2] == "-l"){
             
                 idioma.setIdioma(argv[3]);
                 
-                idioma.salvarAFichero(out);
+                idioma.salvarAFichero("out.bgr");
             
             }
             
@@ -140,11 +135,11 @@ int main(int argc, char** argv) {
             
             idioma.ordenar();
             
-            if (argc[2] == "-l"){
+            if (argv[2] == "-l"){
             
                 idioma.setIdioma(argv[3]);
                 
-                idioma.salvarAFichero(out);
+                idioma.salvarAFichero("out.bgr");
             
             }
             
@@ -175,11 +170,11 @@ int main(int argc, char** argv) {
             
             idioma.ordenar();
             
-            if (argc[2] == "-l"){
+            if (argv[2] == "-l"){
             
                 idioma.setIdioma(argv[3]);
                 
-                idioma.salvarAFichero(out);
+                idioma.salvarAFichero("out.bgr");
             
             }
             
@@ -199,11 +194,11 @@ int main(int argc, char** argv) {
             
             idioma.ordenar();
             
-            if (argc[2] == "-l"){
+            if (argv[2] == "-l"){
             
                 idioma.setIdioma(argv[3]);
                 
-                idioma.salvarAFichero(out);
+                idioma.salvarAFichero("out.bgr");
             
             }
             
@@ -224,7 +219,7 @@ int main(int argc, char** argv) {
     
     if (argc == 7){
     
-        if (argv[1] == "-c"){
+        if (strcmp(argv[1],"-c") == 0 ){
             
             contador.calcularFrecuenciasBigramas(argv[6]);
             
@@ -232,7 +227,7 @@ int main(int argc, char** argv) {
             
             idioma.ordenar();
             
-            if (argc[2] == "-l"){
+            if (argv[2] == "-l"){
             
                 idioma.setIdioma(argv[3]);
             
@@ -244,7 +239,7 @@ int main(int argc, char** argv) {
             
             }
             
-        }else if (argv[1] == "-a"){
+        }else if (strcmp(argv[1],"-l") == 0){
             
             contador.calcularFrecuenciasBigramas(argv[6]);
             
@@ -252,7 +247,7 @@ int main(int argc, char** argv) {
             
             idioma.ordenar();
             
-            if (argc[2] == "-l"){
+            if (argv[2] == "-l"){
             
                 idioma.setIdioma(argv[3]);
             
@@ -285,7 +280,7 @@ int main(int argc, char** argv) {
             
             idioma.ordenar();
             
-            if (argc[2] == "-l"){
+            if (argv[2] == "-l"){
             
                 idioma.setIdioma(argv[3]);
             
@@ -307,7 +302,7 @@ int main(int argc, char** argv) {
             
             idioma.ordenar();
             
-            if (argc[2] == "-l"){
+            if (argv[2] == "-l"){
             
                 idioma.setIdioma(argv[3]);
             
@@ -342,7 +337,7 @@ int main(int argc, char** argv) {
             
             idioma.ordenar();
             
-            if (argc[2] == "-l"){
+            if (argv[2] == "-l"){
             
                 idioma.setIdioma(argv[3]);
             
@@ -366,7 +361,7 @@ int main(int argc, char** argv) {
             
             idioma.ordenar();
             
-            if (argc[2] == "-l"){
+            if (argv[2] == "-l"){
             
                 idioma.setIdioma(argv[3]);
             

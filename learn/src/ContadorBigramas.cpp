@@ -13,25 +13,33 @@
 //Echale un ojo a todas las funciones del archivo, pero concretamente a:
 //addBigrama() , ToIdioma() , FromIdioma () , CalculaFrecuenciaBigrama()
 
-using namespace std;
 
-ContadorBigramas::reservarMemoria(int n){
 
-    if(_bigramas != NULL)
-    delete [][] _bigramas;
+void ContadorBigramas::reservarMemoria(int n){
     
-    _bigramas = new int [n][n];
+    liberarMemoria();
+    
+    _bigramas = new int*[n];
+    
+    for (int i = 0 ; i < n ; i++)
+        _bigramas[i] = new int[n];
 
 }
 
-ContadorBigramas::liberarMemoria(){
+void ContadorBigramas::liberarMemoria(){
 
-    if(_bigramas != NULL)
-    delete [][] _bigramas;
-
+    if(_bigramas != NULL){
+    
+        for (int i = 0 ; i < getSize() ; i++)
+            delete[] this->_bigramas[i];
+        
+        delete[] _bigramas;
+    
+    }
+    
 }
 
-ContadorBigramas::copiar(const ContadorBigramas& otro){
+void ContadorBigramas::copiar(const ContadorBigramas& otro){
 
     liberarMemoria();
     _caracteresValidos = otro._caracteresValidos;
@@ -52,14 +60,14 @@ ContadorBigramas::copiar(const ContadorBigramas& otro){
 ContadorBigramas::ContadorBigramas(const std::string& caracteresValidos){
 
     _caracteresValidos = caracteresValidos;
-    
+    _bigramas = NULL;
     reservarMemoria(_caracteresValidos.length());
     
-    for (int i = 0 ; i <= _caracteresValidos.length() ; i++){
+    for (int i = 0 ; i < _caracteresValidos.length() ; i++){
     
-        for (int j = 0 ; j <= _caracteresValidos.length() ; j++){
+        for (int j = 0 ; j < _caracteresValidos.length() ; j++){
         
-        _bigramas [i][j] = 0;
+         _bigramas [i][j] = 0;
         
         }
     
@@ -91,13 +99,13 @@ ContadorBigramas::~ContadorBigramas(){
 
 }
 
-ContadorBigramas::getSize() const{
+int ContadorBigramas::getSize() const{
 
     return _caracteresValidos.length();
 
 }
 
-ContadorBigramas::getBigramasActivos() const{
+int ContadorBigramas::getBigramasActivos() const{
 
     int contador = 0;
     for (int i = 0 ; i <= _caracteresValidos.length() ; i++){
@@ -113,7 +121,7 @@ ContadorBigramas::getBigramasActivos() const{
     return contador;
 }
 
-ContadorBigramas::addBigrama(const char cadena[], int frecuencia){
+bool ContadorBigramas::addBigrama(const char cadena[], int frecuencia){
     // CREO QUE ESTA BIEN , PERO HAY QUE REVISARLO
     
     bool ok = false;
@@ -161,13 +169,13 @@ ContadorBigramas::addBigrama(const char cadena[], int frecuencia){
 
 }
 
-ContadorBigramas::operator =(const ContadorBigramas& orig){
+ContadorBigramas& ContadorBigramas::operator =(const ContadorBigramas& orig){
 
     copiar(orig);
 
 }
 
-ContadorBigramas::operator +=(const ContadorBigramas& rhs){
+ContadorBigramas& ContadorBigramas::operator +=(const ContadorBigramas& rhs){
     
     
     for (int i = 0 ; i < _caracteresValidos.length() ; i++){
@@ -183,13 +191,12 @@ ContadorBigramas::operator +=(const ContadorBigramas& rhs){
         }
     
     }
-    // HAY QUE DEVOLVER ALGO Y NO SE SI ESTO ESTA BIEN
 
-    return this;
+    return *this;
 
 }
 
-ContadorBigramas::calcularFrecuenciasBigramas(const char* nfichero){
+bool ContadorBigramas::calcularFrecuenciasBigramas(const char* nfichero){
     
 //Al recibir el numero de bigramas del fichero, reservar meoria en _conjunto,
 //y luego con un while ir rellenando los bigramas con el setbigrama y el
@@ -197,18 +204,22 @@ ContadorBigramas::calcularFrecuenciasBigramas(const char* nfichero){
 //que no ha llegado a fin de fichero (cuando llega a fin de fichero, fichero es null
     
     bool ok = false;
-    char cadena[2];
+    char cadena[2];//COMPROBAR VALIDEZ DE ESE *
     ifstream fentrada;
     fentrada.open(nfichero);
     
-    if (fentrada) {
+    if (nfichero) {
 
-        fentrada >> cadena[];
+        fentrada >> cadena;//Preguntar si asi o metiendo los dos valores por separado
+        fentrada >> cadena[1];
+     
+       
         
-        while(fentrada != NULL){//Si no funciona con fentrada probar con nfichero
-            
-            addBigrama(cadena[] , 0);
-            fentrada >> cadena[];
+        while(nfichero != NULL){//Si no funciona con fentrada probar con nfichero ¨// ULTIMA ACTU ; CAMBIO FENTRADA POR NFICHERO 
+            cout << cadena[0] << endl;
+            addBigrama(cadena , 0);//NO SE COMO PASARLE EL PRIMER ARGUMENTO CORRECTAMENTE.
+            fentrada >> cadena[0];
+            fentrada >> cadena[1];
         
         }
         
@@ -225,7 +236,7 @@ ContadorBigramas::calcularFrecuenciasBigramas(const char* nfichero){
 
 }
 
-ContadorBigramas::toIdioma() const{
+Idioma ContadorBigramas::toIdioma() const{
     
     //Primero hay que crear un objeto de tipo Idioma, para lo que necesitamos
     //conocer el numero de  bigramas que hay, una vez teniendo el numero, y el
@@ -269,7 +280,7 @@ ContadorBigramas::toIdioma() const{
                 cadena[0] = _caracteresValidos[i];
                 cadena[1] = _caracteresValidos[j];
                 
-                bigrama.setBigrama(cadena[]);//meto la cadena en el bigrama.
+                bigrama.setBigrama(cadena);//MISMO PROBLEMA CON EL PRIMER ARGUMENTOO.
                 bigrama.setFrecuencia(_bigramas[i][j]);//meto el valor de la matriz.
                 
                 objIdioma.setPosicion(posicion , bigrama);
@@ -285,17 +296,27 @@ ContadorBigramas::toIdioma() const{
     
 }
 
-ContadorBigramas::fromIdioma(const Idioma& i){
+void ContadorBigramas::fromIdioma(const Idioma& i){
 
     //Supongo que el mismo procedimiento que lo anterior pero viseversapremoh
     //Recorres el conjunto de bigramas del idioma, y con cada bigrama vas
     //haciendo un "addBigrama(bigrama , frecuencia)"
     
+    bool ok;
+    
     for (int j = 0 ; j < i.getSize() ; j++){
     
-        addBigrama(i.getPosicion(j));
+        ok = addBigrama(i.getPosicion(j).getBigrama() , i.getPosicion(j).getFrecuencia());//NO ENCUENTRA LA FUNCION?????????
+        
+        if (!ok){
+        
+            cerr << "Error al incluir el bigrama en la matriz." << endl;
+        
+        }
     
     }
+    
+    
     
     //Echale un ojo a este método porque me resulta rariiiiisssssssimo que
     //sea solo un for, aunque creo que asi basta.

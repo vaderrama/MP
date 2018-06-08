@@ -17,6 +17,8 @@
 
 #include "Bigrama.h"
 
+using namespace std;
+
 /**
  * @class Idioma
  * @brief Representa el conjunto los bigramas asociados a un idioma junto con el 
@@ -26,7 +28,7 @@ class Idioma {
  private:
 
     std::string _idioma;    /// Identificador del idioma
-    Bigrama* _conjunto;     /// Vector dinámico de bigramas
+    Bigrama* _conjunto = NULL;     /// Vector dinámico de bigramas
     int _nBigramas;         /// Número de bigramas en el vector dinámico
 
     void reservarMemoria(int n);
@@ -118,7 +120,7 @@ public:
      */
     void ordenar();
 
-    friend std::ostream & operator<<(std::ostream & os, const Idioma & i);
+    friend std::ostream& operator<<(std::ostream & os, const Idioma &i);
     friend std::istream & operator>>(std::istream & os, Idioma & i);
 
     /**
@@ -146,7 +148,7 @@ public:
  * @param i Idioma a serializar
  * @return El mismo flujo de salida para inserciones consecutivas
  */
-std::ostream & operator<<(std::ostream & os, const Idioma & i);
+std::ostream& operator<<(std::ostream &os, const Idioma &i);
 
 /**
  * @brief Reconstruye un Idioma a partir de una serialización
@@ -154,7 +156,7 @@ std::ostream & operator<<(std::ostream & os, const Idioma & i);
  * @param i Idioma reconstruido
  * @return El mismo flujo de entrada para extracciones consecutivas
  */
-std::istream & operator>>(std::istream & is, Idioma & i);
+std::istream& operator>>(std::istream &is, Idioma &i);
 
 
 #endif

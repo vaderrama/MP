@@ -1,0 +1,6 @@
+build/Debug/Cygwin-Windows/src/Idioma.o: src/Idioma.cpp include/Idioma.h \
+ include/Bigrama.h
+
+include/Idioma.h:
+
+include/Bigrama.h:

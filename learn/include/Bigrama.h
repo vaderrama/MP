@@ -73,14 +73,14 @@ public:
  * @param os El stream de salida en el que se inserta
  * @return @p os para poder encadenar varias inserciones consecutivas
  */
-std::ostream& operator<<(std::ostream& os, const Bigrama& bigrama);
+std::ostream& operator<<(std::ostream &os, const Bigrama &bigrama);
 
 /**
  * @brief Sobrecarga del operador de extracción de un stream.
  * @param is El stream de entrada desde el que se extrae
  * @return @p is para poder encadenar varias extracciones consecutivas
  */
-std::istream& operator>>(std::istream& is, Bigrama& bigrama);
+std::istream& operator>>(std::istream & is, Bigrama &bigrama);
 
 
 #endif /* BIGRAMA_H */

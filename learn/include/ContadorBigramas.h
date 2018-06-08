@@ -15,6 +15,7 @@
 #define CONTADOR_BIGRAMAS_H
 
 #include "Idioma.h"
+using namespace std;
 
 class ContadorBigramas {
     
